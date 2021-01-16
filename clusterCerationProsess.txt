@@ -1,0 +1,63 @@
+How to Create EKS in Amazon Cloud
+
+1)configure AWS cli on machine
+2)try to connect aws
+
+#I am Role creation
+serach iam
+create role
+
+2)VPC And security Group
+cloud formation template 
+open amazon eks
+go to cloud formation 
+https://s3.us-west-2.amazonaws.com/amazon-eks/cloudformation/2020-10-29/amazon-eks-vpc-private-subnets.yaml
+
+click on stack
+go to output
+copy all infomation
+
+create EKS
+give unique name
+select role
+then selct VPC and security Group
+click create
+name- ngxcluster
+
+select eks
+server and cluster policy
+eks policy
+
+now create cloud worker nodes
+using cloud formation
+https://s3.us-west-2.amazonaws.com/amazon-eks/cloudformation/2020-10-29/amazon-eks-nodegroup.yaml
+provided cluster name whoch was created
+nodegroup
+ami-0e609024e4dbce4a5
+
+Open Power shell
+make sure that 
+Kubectl and aws authonticator misu be install machine
+To cross check
+./kubectl version --short --client
+.\aws-iam-authenticator.exe help
+
+then fire commands --nginxcluster EKS cluster name
+aws eks update-kubeconfig --name nginxcluster 
+.\kubectl apply -f .\aws-auth-cm.yaml
+
+.\kubectl get nodes
+
+Now Create deployement using yaml file
+.\kubectl create -f .\nginx.yaml
+
+Now create srevice to monitor application
+.\kubectl create -f .\nginx-svc.yaml
+
+.\kubectl describe svc nginx
+you will get load balance url to check application.
+
+
+https://www.youtube.com/watch?v=6H5sXQoJiso
+us-east-1
+aws configure
